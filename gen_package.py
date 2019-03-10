@@ -5,7 +5,7 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('name')
 parser.add_argument('--num-classes', type=int, default=1)
-parser.add_argument('--package-ref', nargs='*', default=[])
+parser.add_argument('--package-ref', action='append', default=[])
 args = parser.parse_args()
 
 with open(args.name + '.sv', 'w') as f:
