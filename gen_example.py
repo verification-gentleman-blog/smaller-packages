@@ -6,11 +6,26 @@ import shutil
 import stat
 import subprocess
 
-parser = argparse.ArgumentParser()
-parser.add_argument('name')
-parser.add_argument('--num-levels', type=int, default=1)
-parser.add_argument('--num-packages-per-level', type=int, default=1)
-parser.add_argument('--total-num-classes', type=int, default=1000)
+parser = argparse.ArgumentParser(
+        'Generates a tree-shaped package hierarchy, including compile script')
+parser.add_argument(
+        'name',
+        help='name of the example configuration')
+parser.add_argument(
+        '--num-levels',
+        type=int,
+        default=1,
+        help='number of levels of the dependency tree')
+parser.add_argument(
+        '--num-package-deps-per-level',
+        type=int,
+        default=1,
+        help='number of package dependencies to each level on the subsequent level')
+parser.add_argument(
+        '--total-num-classes',
+        type=int,
+        default=1000,
+        help='the total number of classes split across the entire package hierarchy')
 args = parser.parse_args()
 
 work_dir = os.path.join('examples', args.name)
@@ -48,7 +63,7 @@ def add_pkg(level, index=0, parent_id=''):
 
     node = Node(name)
     if level < args.num_levels - 1:
-        for i in range(0, args.num_packages_per_level):
+        for i in range(0, args.num_package_deps_per_level):
             node.add_child(add_pkg(level + 1, i, cur_id))
     return node
 

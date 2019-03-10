@@ -3,9 +3,16 @@
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('name')
-parser.add_argument('--num-classes', type=int, default=1)
-parser.add_argument('--package-ref', action='append', default=[])
+parser.add_argument('name',
+                    help='name of the package to be generated')
+parser.add_argument('--num-classes',
+                    type=int,
+                    default=1,
+                    help='number of class definitions the package will contain')
+parser.add_argument('--package-ref',
+                    action='append',
+                    default=[],
+                    help='makes this package depend on the provided package')
 args = parser.parse_args()
 
 with open(args.name + '.sv', 'w') as f:
